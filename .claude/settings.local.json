@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/C:\\Web Projelerim/**)",
+      "Read(/C:\\Web Projelerim\\kolay-kredi/**)",
+      "Read(/C:\\Web Projelerim\\Araclar\\automated-website-builder/**)",
+      "Read(/C:\\Web Projelerim\\Araclar\\automated-website-builder/**)",
+      "Bash(node:*)",
+      "WebFetch(domain:netroya.github.io)"
+    ],
+    "deny": [],
+    "ask": [],
+    "additionalDirectories": [
+      "C:\\Web Projelerim\\Araclar\\automated-website-builder"
+    ]
+  }
+}

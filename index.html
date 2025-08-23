@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Kod Üretici - Ücretsiz QR Code Generator</title>
+    <meta name="description" content="Ücretsiz QR kod üretici. Metin, URL, WiFi, telefon numarası ve daha fazlası için hızlıca QR kod oluşturun. Anında indir ve kullan.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-40X5D8K6WH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-40X5D8K6WH', {
+            page_title: 'QR Kod Üretici - Ana Sayfa',
+            page_location: window.location.href
+        });
+    </script>
+    
+    <!-- Performance optimizations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
+    
+    <!-- AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=pub-9023802833968711" crossorigin="anonymous"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-qrcode"></i>
+                <span>QR Kod Üretici</span>
+            </div>
+            <div class="nav-links">
+                <a href="#generator">Üret</a>
+                <a href="#examples">Örnekler</a>
+                <a href="#about">Hakkında</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Ücretsiz QR Kod Üretici</h1>
+                    <p>Metin, URL, WiFi, telefon numarası ve daha fazlası için anında QR kod oluşturun</p>
+                    <div class="hero-features">
+                        <span><i class="fas fa-check"></i> Ücretsiz</span>
+                        <span><i class="fas fa-check"></i> Hızlı</span>
+                        <span><i class="fas fa-check"></i> Güvenli</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QR Generator Section -->
+        <section id="generator" class="generator-section">
+            <div class="container">
+                <div class="generator-grid">
+                    <!-- Input Section -->
+                    <div class="input-section">
+                        <div class="input-header">
+                            <h2>QR Kod Oluştur</h2>
+                            <p>Aşağıdan bir tür seçin ve bilgilerinizi girin</p>
+                        </div>
+
+                        <!-- Type Selector -->
+                        <div class="type-selector">
+                            <button class="type-btn active" data-type="text">
+                                <i class="fas fa-font"></i>
+                                <span>Metin</span>
+                            </button>
+                            <button class="type-btn" data-type="url">
+                                <i class="fas fa-link"></i>
+                                <span>URL</span>
+                            </button>
+                            <button class="type-btn" data-type="wifi">
+                                <i class="fas fa-wifi"></i>
+                                <span>WiFi</span>
+                            </button>
+                            <button class="type-btn" data-type="phone">
+                                <i class="fas fa-phone"></i>
+                                <span>Telefon</span>
+                            </button>
+                            <button class="type-btn" data-type="email">
+                                <i class="fas fa-envelope"></i>
+                                <span>E-posta</span>
+                            </button>
+                            <button class="type-btn" data-type="sms">
+                                <i class="fas fa-comment"></i>
+                                <span>SMS</span>
+                            </button>
+                        </div>
+
+                        <!-- Input Forms -->
+                        <div class="input-forms">
+                            <!-- Text Input -->
+                            <div class="input-form active" data-form="text">
+                                <label for="text-input">Metninizi girin:</label>
+                                <textarea id="text-input" placeholder="Buraya metninizi yazın..." rows="4"></textarea>
+                            </div>
+
+                            <!-- URL Input -->
+                            <div class="input-form" data-form="url">
+                                <label for="url-input">Website URL'si:</label>
+                                <input type="url" id="url-input" placeholder="https://example.com">
+                            </div>
+
+                            <!-- WiFi Input -->
+                            <div class="input-form" data-form="wifi">
+                                <label for="wifi-ssid">WiFi Ağ Adı (SSID):</label>
+                                <input type="text" id="wifi-ssid" placeholder="WiFi ağ adı">
+                                
+                                <label for="wifi-password">Şifre:</label>
+                                <input type="password" id="wifi-password" placeholder="WiFi şifresi">
+                                
+                                <label for="wifi-security">Güvenlik:</label>
+                                <select id="wifi-security">
+                                    <option value="WPA">WPA/WPA2</option>
+                                    <option value="WEP">WEP</option>
+                                    <option value="nopass">Şifresiz</option>
+                                </select>
+                            </div>
+
+                            <!-- Phone Input -->
+                            <div class="input-form" data-form="phone">
+                                <label for="phone-input">Telefon Numarası:</label>
+                                <input type="tel" id="phone-input" placeholder="+90 555 123 45 67">
+                            </div>
+
+                            <!-- Email Input -->
+                            <div class="input-form" data-form="email">
+                                <label for="email-input">E-posta Adresi:</label>
+                                <input type="email" id="email-input" placeholder="email@example.com">
+                                
+                                <label for="email-subject">Konu (İsteğe bağlı):</label>
+                                <input type="text" id="email-subject" placeholder="E-posta konusu">
+                                
+                                <label for="email-body">Mesaj (İsteğe bağlı):</label>
+                                <textarea id="email-body" placeholder="E-posta mesajı..." rows="3"></textarea>
+                            </div>
+
+                            <!-- SMS Input -->
+                            <div class="input-form" data-form="sms">
+                                <label for="sms-phone">Telefon Numarası:</label>
+                                <input type="tel" id="sms-phone" placeholder="+90 555 123 45 67">
+                                
+                                <label for="sms-message">Mesaj:</label>
+                                <textarea id="sms-message" placeholder="SMS mesajınız..." rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Generate Button -->
+                        <button id="generate-btn" class="generate-btn">
+                            <i class="fas fa-magic"></i>
+                            QR Kod Oluştur
+                        </button>
+                    </div>
+
+                    <!-- Output Section -->
+                    <div class="output-section">
+                        <div class="qr-display">
+                            <div class="qr-placeholder">
+                                <i class="fas fa-qrcode"></i>
+                                <p>QR kodunuz burada görünecek</p>
+                            </div>
+                            <canvas id="qr-canvas" style="display: none;"></canvas>
+                        </div>
+                        
+                        <div class="qr-actions" style="display: none;">
+                            <button id="download-btn" class="action-btn">
+                                <i class="fas fa-download"></i>
+                                İndir
+                            </button>
+                            <button id="copy-btn" class="action-btn">
+                                <i class="fas fa-copy"></i>
+                                Kopyala
+                            </button>
+                            <button id="new-btn" class="action-btn secondary">
+                                <i class="fas fa-plus"></i>
+                                Yeni QR Kod
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section id="examples" class="examples-section">
+            <div class="container">
+                <h2>Kullanım Örnekleri</h2>
+                <div class="examples-grid">
+                    <div class="example-card">
+                        <i class="fas fa-store"></i>
+                        <h3>İşletmeler</h3>
+                        <p>Restaurant menüleri, iletişim bilgileri ve WiFi paylaşımı</p>
+                    </div>
+                    <div class="example-card">
+                        <i class="fas fa-calendar"></i>
+                        <h3>Etkinlikler</h3>
+                        <p>Etkinlik bilgileri, kayıt linkleri ve sosyal medya paylaşımı</p>
+                    </div>
+                    <div class="example-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Eğitim</h3>
+                        <p>Ders materyalleri, ödev teslimi ve sınıf bilgileri</p>
+                    </div>
+                    <div class="example-card">
+                        <i class="fas fa-heart"></i>
+                        <h3>Kişisel</h3>
+                        <p>Sosyal medya profilleri, iletişim bilgileri ve kişisel linkler</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="about-content">
+                    <h2>QR Kodlar Hakkında</h2>
+                    <p>QR (Quick Response) kodlar, hızlı veri okuma için tasarlanmış iki boyutlu barkodlardır. 1994 yılında Japonya'da geliştirilen bu teknoloji, günümüzde yaygın olarak kullanılmaktadır.</p>
+                    
+                    <div class="features-grid">
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>Güvenli</h3>
+                            <p>Verileriniz tamamen tarayıcınızda işlenir, sunucularımıza gönderilmez</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h3>Mobil Uyumlu</h3>
+                            <p>Tüm cihazlarda mükemmel çalışır ve responsive tasarım</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-bolt"></i>
+                            <h3>Hızlı</h3>
+                            <p>Anında QR kod oluşturma ve indirme</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ad Space -->
+        <section class="ad-section">
+            <div class="container">
+                <ins class="adsbygoogle"
+                     style="display:block; text-align:center;"
+                     data-ad-layout="in-article"
+                     data-ad-format="fluid"
+                     data-ad-client="pub-9023802833968711"
+                     data-ad-slot="1234567890"></ins>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>QR Kod Üretici</h3>
+                    <p>Ücretsiz, hızlı ve güvenli QR kod oluşturma aracı</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Hızlı Linkler</h4>
+                    <a href="#generator">QR Kod Oluştur</a>
+                    <a href="#examples">Örnekler</a>
+                    <a href="#about">Hakkında</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Yasal</h4>
+                    <a href="gizlilik-politikasi.html">Gizlilik Politikası</a>
+                    <a href="kullanim-kosullari.html">Kullanım Koşulları</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 QR Kod Üretici. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</body>
+</html>

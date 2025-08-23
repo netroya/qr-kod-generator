@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://qr-kod-uretici.vercel.app/sitemap.xml
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.git/
+Disallow: /node_modules/
+
+# Allow important resources
+Allow: /styles.css
+Allow: /script.js
+Allow: /favicon.ico
+Allow: /favicon.svg
