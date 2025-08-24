@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Kod Generator - Ücretsiz QR Code Generator</title>
-    <meta name="description" content="Ücretsiz QR kod generator. Metin, URL, WiFi, telefon numarası ve daha fazlası için hızlıca QR kod oluşturun. Anında indir ve kullan.">
+    <meta name="description" content="Ücretsiz QR kod generator. Metin, URL, WiFi, telefon numarası ve daha fazlası için hızlıca QR kod oluşturun.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -23,283 +23,612 @@
         });
     </script>
     
-    <!-- Performance optimizations -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
-    
     <!-- AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=pub-9023802833968711" crossorigin="anonymous"></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary-color: #4F46E5;
+            --primary-dark: #3730A3;
+            --secondary-color: #06B6D4;
+            --accent-color: #F59E0B;
+            --success-color: #10B981;
+            --error-color: #EF4444;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
+            --border-color: #E5E7EB;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 900px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .generator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .input-section {
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 15px;
+        }
+
+        .type-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .type-btn {
+            padding: 10px;
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .type-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .type-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .type-btn i {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .input-form {
+            display: none;
+        }
+
+        .input-form.active {
+            display: block;
+        }
+
+        .input-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .input-form input,
+        .input-form textarea,
+        .input-form select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .input-form input:focus,
+        .input-form textarea:focus,
+        .input-form select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .output-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 15px;
+        }
+
+        #qr-display {
+            width: 256px;
+            height: 256px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .qr-placeholder {
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .qr-placeholder i {
+            font-size: 4rem;
+            opacity: 0.3;
+            margin-bottom: 10px;
+        }
+
+        .qr-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .action-btn.secondary {
+            background: var(--text-secondary);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .generator-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .type-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 500;
+            animation: slideIn 0.3s ease-out;
+            z-index: 1000;
+        }
+
+        .notification.success {
+            background: var(--success-color);
+        }
+
+        .notification.error {
+            background: var(--error-color);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <i class="fas fa-qrcode"></i>
-                <span>QR Kod Generator</span>
-            </div>
-            <div class="nav-links">
-                <a href="#generator">Üret</a>
-                <a href="#examples">Örnekler</a>
-                <a href="#about">Hakkında</a>
-            </div>
-        </div>
-    </nav>
-
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h1>Ücretsiz QR Kod Generator</h1>
-                    <p>Metin, URL, WiFi, telefon numarası ve daha fazlası için anında QR kod oluşturun</p>
-                    <div class="hero-features">
-                        <span><i class="fas fa-check"></i> Ücretsiz</span>
-                        <span><i class="fas fa-check"></i> Hızlı</span>
-                        <span><i class="fas fa-check"></i> Güvenli</span>
-                    </div>
+    <div class="container">
+        <h1><i class="fas fa-qrcode"></i> QR Kod Generator</h1>
+        <p class="subtitle">Ücretsiz, hızlı ve güvenli QR kod oluşturun</p>
+        
+        <div class="generator-grid">
+            <div class="input-section">
+                <div class="type-selector">
+                    <button class="type-btn active" data-type="text">
+                        <i class="fas fa-font"></i>
+                        <span>Metin</span>
+                    </button>
+                    <button class="type-btn" data-type="url">
+                        <i class="fas fa-link"></i>
+                        <span>URL</span>
+                    </button>
+                    <button class="type-btn" data-type="wifi">
+                        <i class="fas fa-wifi"></i>
+                        <span>WiFi</span>
+                    </button>
+                    <button class="type-btn" data-type="phone">
+                        <i class="fas fa-phone"></i>
+                        <span>Telefon</span>
+                    </button>
+                    <button class="type-btn" data-type="email">
+                        <i class="fas fa-envelope"></i>
+                        <span>E-posta</span>
+                    </button>
+                    <button class="type-btn" data-type="sms">
+                        <i class="fas fa-comment"></i>
+                        <span>SMS</span>
+                    </button>
                 </div>
-            </div>
-        </section>
 
-        <!-- QR Generator Section -->
-        <section id="generator" class="generator-section">
-            <div class="container">
-                <div class="generator-grid">
-                    <!-- Input Section -->
-                    <div class="input-section">
-                        <div class="input-header">
-                            <h2>QR Kod Oluştur</h2>
-                            <p>Aşağıdan bir tür seçin ve bilgilerinizi girin</p>
-                        </div>
-
-                        <!-- Type Selector -->
-                        <div class="type-selector">
-                            <button class="type-btn active" data-type="text">
-                                <i class="fas fa-font"></i>
-                                <span>Metin</span>
-                            </button>
-                            <button class="type-btn" data-type="url">
-                                <i class="fas fa-link"></i>
-                                <span>URL</span>
-                            </button>
-                            <button class="type-btn" data-type="wifi">
-                                <i class="fas fa-wifi"></i>
-                                <span>WiFi</span>
-                            </button>
-                            <button class="type-btn" data-type="phone">
-                                <i class="fas fa-phone"></i>
-                                <span>Telefon</span>
-                            </button>
-                            <button class="type-btn" data-type="email">
-                                <i class="fas fa-envelope"></i>
-                                <span>E-posta</span>
-                            </button>
-                            <button class="type-btn" data-type="sms">
-                                <i class="fas fa-comment"></i>
-                                <span>SMS</span>
-                            </button>
-                        </div>
-
-                        <!-- Input Forms -->
-                        <div class="input-forms">
-                            <!-- Text Input -->
-                            <div class="input-form active" data-form="text">
-                                <label for="text-input">Metninizi girin:</label>
-                                <textarea id="text-input" placeholder="Buraya metninizi yazın..." rows="4"></textarea>
-                            </div>
-
-                            <!-- URL Input -->
-                            <div class="input-form" data-form="url">
-                                <label for="url-input">Website URL'si:</label>
-                                <input type="url" id="url-input" placeholder="https://example.com">
-                            </div>
-
-                            <!-- WiFi Input -->
-                            <div class="input-form" data-form="wifi">
-                                <label for="wifi-ssid">WiFi Ağ Adı (SSID):</label>
-                                <input type="text" id="wifi-ssid" placeholder="WiFi ağ adı">
-                                
-                                <label for="wifi-password">Şifre:</label>
-                                <input type="password" id="wifi-password" placeholder="WiFi şifresi">
-                                
-                                <label for="wifi-security">Güvenlik:</label>
-                                <select id="wifi-security">
-                                    <option value="WPA">WPA/WPA2</option>
-                                    <option value="WEP">WEP</option>
-                                    <option value="nopass">Şifresiz</option>
-                                </select>
-                            </div>
-
-                            <!-- Phone Input -->
-                            <div class="input-form" data-form="phone">
-                                <label for="phone-input">Telefon Numarası:</label>
-                                <input type="tel" id="phone-input" placeholder="+90 555 123 45 67">
-                            </div>
-
-                            <!-- Email Input -->
-                            <div class="input-form" data-form="email">
-                                <label for="email-input">E-posta Adresi:</label>
-                                <input type="email" id="email-input" placeholder="email@example.com">
-                                
-                                <label for="email-subject">Konu (İsteğe bağlı):</label>
-                                <input type="text" id="email-subject" placeholder="E-posta konusu">
-                                
-                                <label for="email-body">Mesaj (İsteğe bağlı):</label>
-                                <textarea id="email-body" placeholder="E-posta mesajı..." rows="3"></textarea>
-                            </div>
-
-                            <!-- SMS Input -->
-                            <div class="input-form" data-form="sms">
-                                <label for="sms-phone">Telefon Numarası:</label>
-                                <input type="tel" id="sms-phone" placeholder="+90 555 123 45 67">
-                                
-                                <label for="sms-message">Mesaj:</label>
-                                <textarea id="sms-message" placeholder="SMS mesajınız..." rows="3"></textarea>
-                            </div>
-                        </div>
-
-                        <!-- Generate Button -->
-                        <button id="generate-btn" class="generate-btn">
-                            <i class="fas fa-magic"></i>
-                            QR Kod Oluştur
-                        </button>
+                <div class="input-forms">
+                    <div class="input-form active" data-form="text">
+                        <label for="text-input">Metninizi girin:</label>
+                        <textarea id="text-input" placeholder="Buraya metninizi yazın..." rows="4"></textarea>
                     </div>
 
-                    <!-- Output Section -->
-                    <div class="output-section">
-                        <div class="qr-display">
-                            <div class="qr-placeholder">
-                                <i class="fas fa-qrcode"></i>
-                                <p>QR kodunuz burada görünecek</p>
-                            </div>
-                            <canvas id="qr-canvas" style="display: none;"></canvas>
-                        </div>
+                    <div class="input-form" data-form="url">
+                        <label for="url-input">Website URL'si:</label>
+                        <input type="url" id="url-input" placeholder="https://example.com">
+                    </div>
+
+                    <div class="input-form" data-form="wifi">
+                        <label for="wifi-ssid">WiFi Ağ Adı (SSID):</label>
+                        <input type="text" id="wifi-ssid" placeholder="WiFi ağ adı">
                         
-                        <div class="qr-actions" style="display: none;">
-                            <button id="download-btn" class="action-btn">
-                                <i class="fas fa-download"></i>
-                                İndir
-                            </button>
-                            <button id="copy-btn" class="action-btn">
-                                <i class="fas fa-copy"></i>
-                                Kopyala
-                            </button>
-                            <button id="new-btn" class="action-btn secondary">
-                                <i class="fas fa-plus"></i>
-                                Yeni QR Kod
-                            </button>
-                        </div>
+                        <label for="wifi-password">Şifre:</label>
+                        <input type="password" id="wifi-password" placeholder="WiFi şifresi">
+                        
+                        <label for="wifi-security">Güvenlik:</label>
+                        <select id="wifi-security">
+                            <option value="WPA">WPA/WPA2</option>
+                            <option value="WEP">WEP</option>
+                            <option value="nopass">Şifresiz</option>
+                        </select>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Examples Section -->
-        <section id="examples" class="examples-section">
-            <div class="container">
-                <h2>Kullanım Örnekleri</h2>
-                <div class="examples-grid">
-                    <div class="example-card">
-                        <i class="fas fa-store"></i>
-                        <h3>İşletmeler</h3>
-                        <p>Restaurant menüleri, iletişim bilgileri ve WiFi paylaşımı</p>
+                    <div class="input-form" data-form="phone">
+                        <label for="phone-input">Telefon Numarası:</label>
+                        <input type="tel" id="phone-input" placeholder="+90 555 123 45 67">
                     </div>
-                    <div class="example-card">
-                        <i class="fas fa-calendar"></i>
-                        <h3>Etkinlikler</h3>
-                        <p>Etkinlik bilgileri, kayıt linkleri ve sosyal medya paylaşımı</p>
-                    </div>
-                    <div class="example-card">
-                        <i class="fas fa-graduation-cap"></i>
-                        <h3>Eğitim</h3>
-                        <p>Ders materyalleri, ödev teslimi ve sınıf bilgileri</p>
-                    </div>
-                    <div class="example-card">
-                        <i class="fas fa-heart"></i>
-                        <h3>Kişisel</h3>
-                        <p>Sosyal medya profilleri, iletişim bilgileri ve kişisel linkler</p>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- About Section -->
-        <section id="about" class="about-section">
-            <div class="container">
-                <div class="about-content">
-                    <h2>QR Kodlar Hakkında</h2>
-                    <p>QR (Quick Response) kodlar, hızlı veri okuma için tasarlanmış iki boyutlu barkodlardır. 1994 yılında Japonya'da geliştirilen bu teknoloji, günümüzde yaygın olarak kullanılmaktadır.</p>
-                    
-                    <div class="features-grid">
-                        <div class="feature">
-                            <i class="fas fa-shield-alt"></i>
-                            <h3>Güvenli</h3>
-                            <p>Verileriniz tamamen tarayıcınızda işlenir, sunucularımıza gönderilmez</p>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-mobile-alt"></i>
-                            <h3>Mobil Uyumlu</h3>
-                            <p>Tüm cihazlarda mükemmel çalışır ve responsive tasarım</p>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-bolt"></i>
-                            <h3>Hızlı</h3>
-                            <p>Anında QR kod oluşturma ve indirme</p>
-                        </div>
+                    <div class="input-form" data-form="email">
+                        <label for="email-input">E-posta Adresi:</label>
+                        <input type="email" id="email-input" placeholder="email@example.com">
+                        
+                        <label for="email-subject">Konu:</label>
+                        <input type="text" id="email-subject" placeholder="E-posta konusu">
+                        
+                        <label for="email-body">Mesaj:</label>
+                        <textarea id="email-body" placeholder="E-posta mesajı..." rows="3"></textarea>
+                    </div>
+
+                    <div class="input-form" data-form="sms">
+                        <label for="sms-phone">Telefon Numarası:</label>
+                        <input type="tel" id="sms-phone" placeholder="+90 555 123 45 67">
+                        
+                        <label for="sms-message">Mesaj:</label>
+                        <textarea id="sms-message" placeholder="SMS mesajınız..." rows="3"></textarea>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Ad Space -->
-        <section class="ad-section">
-            <div class="container">
-                <ins class="adsbygoogle"
-                     style="display:block; text-align:center;"
-                     data-ad-layout="in-article"
-                     data-ad-format="fluid"
-                     data-ad-client="pub-9023802833968711"
-                     data-ad-slot="1234567890"></ins>
+                <button id="generate-btn" class="generate-btn">
+                    <i class="fas fa-magic"></i> QR Kod Oluştur
+                </button>
             </div>
-        </section>
-    </main>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>QR Kod Generator</h3>
-                    <p>Ücretsiz, hızlı ve güvenli QR kod oluşturma aracı</p>
+            <div class="output-section">
+                <div id="qr-display">
+                    <div class="qr-placeholder">
+                        <i class="fas fa-qrcode"></i>
+                        <p>QR kodunuz burada görünecek</p>
+                    </div>
                 </div>
-                <div class="footer-section">
-                    <h4>Hızlı Linkler</h4>
-                    <a href="#generator">QR Kod Oluştur</a>
-                    <a href="#examples">Örnekler</a>
-                    <a href="#about">Hakkında</a>
+                
+                <div class="qr-actions hidden" id="qr-actions">
+                    <button id="download-btn" class="action-btn">
+                        <i class="fas fa-download"></i> İndir
+                    </button>
+                    <button id="new-btn" class="action-btn secondary">
+                        <i class="fas fa-plus"></i> Yeni
+                    </button>
                 </div>
-                <div class="footer-section">
-                    <h4>Yasal</h4>
-                    <a href="gizlilik-politikasi.html">Gizlilik Politikası</a>
-                    <a href="kullanim-kosullari.html">Kullanım Koşulları</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 QR Kod Generator. Tüm hakları saklıdır.</p>
             </div>
         </div>
-    </footer>
+        
+        <!-- Ad Space -->
+        <div style="text-align: center; margin-top: 30px;">
+            <ins class="adsbygoogle"
+                 style="display:block; text-align:center;"
+                 data-ad-layout="in-article"
+                 data-ad-format="fluid"
+                 data-ad-client="pub-9023802833968711"
+                 data-ad-slot="1234567890"></ins>
+        </div>
+    </div>
 
-    <!-- QR Code Library - Fixed version -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
     <script>
+        class QRGenerator {
+            constructor() {
+                this.currentType = 'text';
+                this.currentQR = null;
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                // Type selector buttons
+                document.querySelectorAll('.type-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => this.handleTypeChange(e));
+                });
+
+                // Generate button
+                document.getElementById('generate-btn').addEventListener('click', () => this.generateQR());
+
+                // Action buttons
+                document.getElementById('download-btn').addEventListener('click', () => this.downloadQR());
+                document.getElementById('new-btn').addEventListener('click', () => this.resetGenerator());
+
+                // Enter key to generate
+                document.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && e.ctrlKey) {
+                        this.generateQR();
+                    }
+                });
+            }
+
+            handleTypeChange(e) {
+                const button = e.currentTarget;
+                const type = button.getAttribute('data-type');
+                
+                // Update active button
+                document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Update active form
+                document.querySelectorAll('.input-form').forEach(form => form.classList.remove('active'));
+                document.querySelector(`[data-form="${type}"]`).classList.add('active');
+                
+                this.currentType = type;
+            }
+
+            generateQR() {
+                const data = this.getQRData();
+                
+                if (!data) {
+                    this.showNotification('Lütfen gerekli alanları doldurun', 'error');
+                    return;
+                }
+
+                try {
+                    // Clear previous QR code
+                    const qrDisplay = document.getElementById('qr-display');
+                    qrDisplay.innerHTML = '';
+
+                    // Generate QR code
+                    const qr = qrcode(0, 'M');
+                    qr.addData(data);
+                    qr.make();
+
+                    // Create image
+                    const size = 256;
+                    qrDisplay.innerHTML = qr.createImgTag(8, 0);
+                    
+                    // Style the QR code image
+                    const img = qrDisplay.querySelector('img');
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.imageRendering = 'pixelated';
+
+                    // Show actions
+                    document.getElementById('qr-actions').classList.remove('hidden');
+                    
+                    // Store for download
+                    this.currentQR = img.src;
+                    
+                    this.showNotification('QR kod başarıyla oluşturuldu!', 'success');
+                    
+                    // Google Analytics tracking
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'qr_generated', {
+                            'event_category': 'QR Generator',
+                            'event_label': this.currentType,
+                            'value': 1
+                        });
+                    }
+                } catch (error) {
+                    console.error(error);
+                    this.showNotification('QR kod oluşturulurken bir hata oluştu', 'error');
+                }
+            }
+
+            getQRData() {
+                switch (this.currentType) {
+                    case 'text':
+                        return document.getElementById('text-input').value.trim();
+                    
+                    case 'url':
+                        const url = document.getElementById('url-input').value.trim();
+                        return url ? (url.startsWith('http') ? url : `https://${url}`) : '';
+                    
+                    case 'wifi':
+                        const ssid = document.getElementById('wifi-ssid').value.trim();
+                        const password = document.getElementById('wifi-password').value;
+                        const security = document.getElementById('wifi-security').value;
+                        
+                        if (!ssid) return '';
+                        
+                        if (security === 'nopass') {
+                            return `WIFI:S:${ssid};T:nopass;;`;
+                        } else {
+                            return `WIFI:S:${ssid};T:${security};P:${password};;`;
+                        }
+                    
+                    case 'phone':
+                        const phone = document.getElementById('phone-input').value.trim();
+                        return phone ? `tel:${phone}` : '';
+                    
+                    case 'email':
+                        const email = document.getElementById('email-input').value.trim();
+                        const subject = document.getElementById('email-subject').value.trim();
+                        const body = document.getElementById('email-body').value.trim();
+                        
+                        if (!email) return '';
+                        
+                        let emailData = `mailto:${email}`;
+                        const params = [];
+                        if (subject) params.push(`subject=${encodeURIComponent(subject)}`);
+                        if (body) params.push(`body=${encodeURIComponent(body)}`);
+                        if (params.length > 0) emailData += `?${params.join('&')}`;
+                        
+                        return emailData;
+                    
+                    case 'sms':
+                        const smsPhone = document.getElementById('sms-phone').value.trim();
+                        const message = document.getElementById('sms-message').value.trim();
+                        
+                        if (!smsPhone) return '';
+                        
+                        return `sms:${smsPhone}${message ? `?body=${encodeURIComponent(message)}` : ''}`;
+                    
+                    default:
+                        return '';
+                }
+            }
+
+            downloadQR() {
+                if (!this.currentQR) return;
+                
+                const link = document.createElement('a');
+                link.download = `qr-code-${Date.now()}.png`;
+                link.href = this.currentQR;
+                link.click();
+                
+                this.showNotification('QR kod indirildi!', 'success');
+                
+                // Google Analytics tracking
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'qr_downloaded', {
+                        'event_category': 'QR Generator',
+                        'event_label': this.currentType,
+                        'value': 1
+                    });
+                }
+            }
+
+            resetGenerator() {
+                // Clear all inputs
+                document.querySelectorAll('.input-form input, .input-form textarea').forEach(input => {
+                    input.value = '';
+                });
+                
+                // Reset QR display
+                document.getElementById('qr-display').innerHTML = `
+                    <div class="qr-placeholder">
+                        <i class="fas fa-qrcode"></i>
+                        <p>QR kodunuz burada görünecek</p>
+                    </div>
+                `;
+                
+                // Hide actions
+                document.getElementById('qr-actions').classList.add('hidden');
+                
+                this.currentQR = null;
+            }
+
+            showNotification(message, type = 'info') {
+                // Remove existing notifications
+                document.querySelectorAll('.notification').forEach(n => n.remove());
+                
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                    ${message}
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Auto remove
+                setTimeout(() => {
+                    notification.style.animation = 'slideIn 0.3s ease-out reverse';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new QRGenerator();
+        });
+        
+        // Initialize AdSense
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </body>
-</html><!-- GitHub Pages Force Refresh: 24 Ağu 2025 Paz 04:23:31 -->
+</html>
