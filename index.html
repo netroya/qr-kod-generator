@@ -577,6 +577,235 @@
             }
         }
 
+        /* Analytics Dashboard */
+        .analytics-dashboard {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e1e5e9;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        /* QR Templates */
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .template-card {
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .template-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.1);
+        }
+
+        .template-card.selected {
+            border-color: var(--primary-color);
+            background: rgba(79, 70, 229, 0.05);
+        }
+
+        .template-preview {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .template-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        /* Advanced Customization */
+        .advanced-controls {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .gradient-picker {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .gradient-stop {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logo-upload {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .logo-preview {
+            width: 60px;
+            height: 60px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .logo-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 6px;
+        }
+
+        /* Export Options */
+        .export-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .export-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--primary-color);
+            background: white;
+            color: var(--primary-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .export-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Social Share */
+        .share-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .share-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .share-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .share-btn.twitter {
+            background: #1da1f2;
+        }
+
+        .share-btn.whatsapp {
+            background: #25d366;
+        }
+
+        .share-btn.facebook {
+            background: #4267b2;
+        }
+
+        .share-btn.telegram {
+            background: #0088cc;
+        }
+
         /* Loading Animation */
         .loading {
             position: relative;
@@ -620,6 +849,12 @@
                 <button class="nav-tab" data-tab="history">
                     <i class="fas fa-history"></i> Geçmiş
                 </button>
+                <button class="nav-tab" data-tab="analytics">
+                    <i class="fas fa-chart-bar"></i> Analitik
+                </button>
+                <button class="nav-tab" data-tab="templates">
+                    <i class="fas fa-palette"></i> Şablonlar
+                </button>
             </div>
         </div>
     </nav>
@@ -631,6 +866,8 @@
             <option value="scanner">QR Tarayıcı</option>
             <option value="batch">Toplu Üretim</option>
             <option value="history">Geçmiş</option>
+            <option value="analytics">Analitik</option>
+            <option value="templates">Şablonlar</option>
         </select>
     </div>
 
@@ -815,6 +1052,56 @@
                                 <option value="H">En Yüksek (%30)</option>
                             </select>
                         </div>
+
+                        <!-- Advanced Customization -->
+                        <div class="advanced-controls">
+                            <h3>🎨 Gelişmiş Özelleştirme</h3>
+                            
+                            <div class="control-group">
+                                <label>
+                                    <input type="checkbox" id="use-gradient"> Gradient Renk Kullan
+                                </label>
+                                <div class="gradient-picker" id="gradient-controls" style="display: none;">
+                                    <div class="gradient-stop">
+                                        <label>Başlangıç:</label>
+                                        <input type="color" id="gradient-start" value="#667eea">
+                                    </div>
+                                    <div class="gradient-stop">
+                                        <label>Bitiş:</label>
+                                        <input type="color" id="gradient-end" value="#764ba2">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label>Logo Ekle:</label>
+                                <div class="logo-upload">
+                                    <input type="file" id="logo-upload" accept="image/*" style="display: none;">
+                                    <div class="logo-preview" id="logo-preview" onclick="document.getElementById('logo-upload').click()">
+                                        <i class="fas fa-plus"></i>
+                                    </div>
+                                    <button type="button" onclick="document.getElementById('logo-upload').click()" class="action-btn secondary">
+                                        Logo Seç
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label>QR Köşe Stili:</label>
+                                <select id="corner-style">
+                                    <option value="square">Kare</option>
+                                    <option value="rounded">Yuvarlaklı</option>
+                                    <option value="extra-rounded">Çok Yuvarlaklı</option>
+                                    <option value="circle">Daire</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group">
+                                <label>Kenar Boşluğu:</label>
+                                <input type="range" id="margin-size" min="0" max="50" value="20">
+                                <span id="margin-value">20px</span>
+                            </div>
+                        </div>
                     </div>
 
                     <button id="generate-btn" class="generate-btn">
@@ -843,6 +1130,38 @@
                         <button id="new-btn" class="action-btn secondary">
                             <i class="fas fa-plus"></i> Yeni
                         </button>
+                        
+                        <!-- Export Options -->
+                        <div class="export-options">
+                            <button class="export-btn" onclick="app.exportAs('png')">
+                                <i class="fas fa-image"></i> PNG
+                            </button>
+                            <button class="export-btn" onclick="app.exportAs('svg')">
+                                <i class="fas fa-vector-square"></i> SVG
+                            </button>
+                            <button class="export-btn" onclick="app.exportAs('pdf')">
+                                <i class="fas fa-file-pdf"></i> PDF
+                            </button>
+                            <button class="export-btn" onclick="app.exportAs('webp')">
+                                <i class="fas fa-compress"></i> WEBP
+                            </button>
+                        </div>
+
+                        <!-- Social Share -->
+                        <div class="share-options">
+                            <button class="share-btn twitter" onclick="app.shareToSocial('twitter')" title="Twitter'da Paylaş">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+                            <button class="share-btn whatsapp" onclick="app.shareToSocial('whatsapp')" title="WhatsApp'ta Paylaş">
+                                <i class="fab fa-whatsapp"></i>
+                            </button>
+                            <button class="share-btn facebook" onclick="app.shareToSocial('facebook')" title="Facebook'ta Paylaş">
+                                <i class="fab fa-facebook"></i>
+                            </button>
+                            <button class="share-btn telegram" onclick="app.shareToSocial('telegram')" title="Telegram'da Paylaş">
+                                <i class="fab fa-telegram"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -929,6 +1248,127 @@ Merhaba dünya"></textarea>
                 </div>
             </div>
         </div>
+
+        <!-- Analytics Tab -->
+        <div class="tab-content" id="analytics-tab">
+            <div class="tab-header">
+                <h1><i class="fas fa-chart-bar"></i> QR Kod Analitikleri</h1>
+                <p>Kullanım istatistiklerinizi görüntüleyin</p>
+            </div>
+
+            <div class="analytics-dashboard">
+                <div class="analytics-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-generated">0</div>
+                        <div class="stat-label">Toplam Oluşturulan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="most-used-type">Text</div>
+                        <div class="stat-label">En Çok Kullanılan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-downloads">0</div>
+                        <div class="stat-label">Toplam İndirme</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="success-rate">100%</div>
+                        <div class="stat-label">Başarı Oranı</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">QR Türleri Dağılımı</div>
+                    <canvas id="type-chart" width="400" height="200"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Günlük Kullanım Trendi</div>
+                    <canvas id="usage-chart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Templates Tab -->
+        <div class="tab-content" id="templates-tab">
+            <div class="tab-header">
+                <h1><i class="fas fa-palette"></i> QR Kod Şablonları</h1>
+                <p>Önceden tasarlanmış şablonları kullanın</p>
+            </div>
+
+            <div class="template-section">
+                <h3>🎨 Renk Şablonları</h3>
+                <div class="template-grid">
+                    <div class="template-card" data-template="classic">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #1F2937, #FFFFFF);">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <div class="template-name">Klasik</div>
+                    </div>
+                    <div class="template-card" data-template="ocean">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <div class="template-name">Okyanus</div>
+                    </div>
+                    <div class="template-card" data-template="sunset">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <div class="template-name">Gün Batımı</div>
+                    </div>
+                    <div class="template-card" data-template="forest">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #11998e, #38ef7d);">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <div class="template-name">Orman</div>
+                    </div>
+                    <div class="template-card" data-template="gold">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <div class="template-name">Altın</div>
+                    </div>
+                    <div class="template-card" data-template="purple">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #667db6, #0082c8);">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <div class="template-name">Mor</div>
+                    </div>
+                </div>
+
+                <h3>🏢 İşletme Şablonları</h3>
+                <div class="template-grid">
+                    <div class="template-card" data-template="restaurant">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="template-name">Restoran</div>
+                    </div>
+                    <div class="template-card" data-template="retail">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #4834d4, #686de0);">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="template-name">Perakende</div>
+                    </div>
+                    <div class="template-card" data-template="event">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #ff9ff3, #f368e0);">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="template-name">Etkinlik</div>
+                    </div>
+                    <div class="template-card" data-template="tech">
+                        <div class="template-preview" style="background: linear-gradient(135deg, #0be881, #62d2a2);">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="template-name">Teknoloji</div>
+                    </div>
+                </div>
+
+                <button id="apply-template" class="generate-btn" disabled>
+                    <i class="fas fa-paint-brush"></i> Şablonu Uygula
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Ad Space -->
@@ -952,6 +1392,9 @@ Merhaba dünya"></textarea>
                 this.qrHistory = JSON.parse(localStorage.getItem('qr-history') || '[]');
                 this.scannerStream = null;
                 this.scannerActive = false;
+                this.analytics = JSON.parse(localStorage.getItem('qr-analytics') || '{}');
+                this.selectedTemplate = null;
+                this.logoImage = null;
                 this.init();
             }
 
@@ -959,6 +1402,8 @@ Merhaba dünya"></textarea>
                 this.bindEvents();
                 this.updateHistoryDisplay();
                 this.updateSizeDisplay();
+                this.updateAnalytics();
+                this.initializeAnalytics();
                 this.registerServiceWorker();
             }
 
@@ -1002,6 +1447,17 @@ Merhaba dünya"></textarea>
                 // History controls
                 document.getElementById('clear-history').addEventListener('click', () => this.clearHistory());
 
+                // Advanced controls
+                document.getElementById('use-gradient').addEventListener('change', (e) => this.toggleGradient(e.target.checked));
+                document.getElementById('logo-upload').addEventListener('change', (e) => this.handleLogoUpload(e));
+                document.getElementById('margin-size').addEventListener('input', (e) => this.updateMarginDisplay(e.target.value));
+
+                // Template controls
+                document.querySelectorAll('.template-card').forEach(card => {
+                    card.addEventListener('click', (e) => this.selectTemplate(e.currentTarget.dataset.template));
+                });
+                document.getElementById('apply-template').addEventListener('click', () => this.applyTemplate());
+
                 // Keyboard shortcuts
                 document.addEventListener('keydown', (e) => this.handleKeyboard(e));
             }
@@ -1023,6 +1479,11 @@ Merhaba dünya"></textarea>
                 // Stop scanner if switching away
                 if (tabId !== 'scanner' && this.scannerActive) {
                     this.stopScanner();
+                }
+
+                // Update analytics when switching to analytics tab
+                if (tabId === 'analytics') {
+                    this.updateAnalyticsDisplay();
                 }
             }
 
@@ -1058,6 +1519,9 @@ Merhaba dünya"></textarea>
                     try {
                         this.createQRCode(data);
                         this.showNotification('QR kod başarıyla oluşturuldu!', 'success');
+                        
+                        // Update analytics
+                        this.updateAnalytics('generate', this.currentType);
                         
                         // Google Analytics tracking
                         if (typeof gtag !== 'undefined') {
@@ -1237,6 +1701,9 @@ Merhaba dünya"></textarea>
                 link.click();
                 
                 this.showNotification('QR kod indirildi!', 'success');
+                
+                // Update analytics
+                this.updateAnalytics('download');
                 
                 // Track download
                 if (typeof gtag !== 'undefined') {
@@ -1634,6 +2101,293 @@ Merhaba dünya"></textarea>
                     navigator.serviceWorker.register('/sw.js').catch(err => {
                         console.log('Service worker registration failed:', err);
                     });
+                }
+            }
+
+            // Advanced Customization Functions
+            toggleGradient(enabled) {
+                const gradientControls = document.getElementById('gradient-controls');
+                gradientControls.style.display = enabled ? 'flex' : 'none';
+            }
+
+            handleLogoUpload(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        this.logoImage = img;
+                        const preview = document.getElementById('logo-preview');
+                        preview.innerHTML = `<img src="${event.target.result}" alt="Logo">`;
+                        this.showNotification('Logo yüklendi!', 'success');
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+
+            updateMarginDisplay(value) {
+                document.getElementById('margin-value').textContent = value + 'px';
+            }
+
+            // Template Functions
+            selectTemplate(templateId) {
+                document.querySelectorAll('.template-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                
+                document.querySelector(`[data-template="${templateId}"]`).classList.add('selected');
+                this.selectedTemplate = templateId;
+                document.getElementById('apply-template').disabled = false;
+            }
+
+            applyTemplate() {
+                if (!this.selectedTemplate) return;
+
+                const templates = {
+                    classic: { dark: '#1F2937', light: '#FFFFFF' },
+                    ocean: { dark: '#667eea', light: '#764ba2', gradient: true },
+                    sunset: { dark: '#f093fb', light: '#f5576c', gradient: true },
+                    forest: { dark: '#11998e', light: '#38ef7d', gradient: true },
+                    gold: { dark: '#f7971e', light: '#ffd200', gradient: true },
+                    purple: { dark: '#667db6', light: '#0082c8', gradient: true },
+                    restaurant: { dark: '#ff6b6b', light: '#ee5a24', gradient: true },
+                    retail: { dark: '#4834d4', light: '#686de0', gradient: true },
+                    event: { dark: '#ff9ff3', light: '#f368e0', gradient: true },
+                    tech: { dark: '#0be881', light: '#62d2a2', gradient: true }
+                };
+
+                const template = templates[this.selectedTemplate];
+                if (!template) return;
+
+                // Apply colors
+                document.getElementById('color-dark').value = template.dark;
+                document.getElementById('color-light').value = template.light;
+
+                // Apply gradient if template has it
+                if (template.gradient) {
+                    document.getElementById('use-gradient').checked = true;
+                    document.getElementById('gradient-start').value = template.dark;
+                    document.getElementById('gradient-end').value = template.light;
+                    this.toggleGradient(true);
+                }
+
+                this.showNotification(`${this.selectedTemplate} şablonu uygulandı!`, 'success');
+                this.switchTab('generator');
+            }
+
+            // Analytics Functions
+            initializeAnalytics() {
+                if (!this.analytics.totalGenerated) {
+                    this.analytics = {
+                        totalGenerated: 0,
+                        totalDownloads: 0,
+                        typeCount: {},
+                        dailyUsage: {},
+                        successRate: 100
+                    };
+                    localStorage.setItem('qr-analytics', JSON.stringify(this.analytics));
+                }
+            }
+
+            updateAnalytics(action = 'generate', type = null) {
+                const today = new Date().toISOString().split('T')[0];
+                
+                if (action === 'generate') {
+                    this.analytics.totalGenerated++;
+                    if (type) {
+                        this.analytics.typeCount[type] = (this.analytics.typeCount[type] || 0) + 1;
+                    }
+                } else if (action === 'download') {
+                    this.analytics.totalDownloads++;
+                }
+
+                // Daily usage tracking
+                if (!this.analytics.dailyUsage[today]) {
+                    this.analytics.dailyUsage[today] = 0;
+                }
+                this.analytics.dailyUsage[today]++;
+
+                localStorage.setItem('qr-analytics', JSON.stringify(this.analytics));
+            }
+
+            updateAnalyticsDisplay() {
+                // Update stats
+                document.getElementById('total-generated').textContent = this.analytics.totalGenerated || 0;
+                document.getElementById('total-downloads').textContent = this.analytics.totalDownloads || 0;
+                document.getElementById('success-rate').textContent = this.analytics.successRate + '%';
+
+                // Find most used type
+                const typeCount = this.analytics.typeCount || {};
+                const mostUsed = Object.keys(typeCount).reduce((a, b) => 
+                    typeCount[a] > typeCount[b] ? a : b, 'text'
+                );
+                document.getElementById('most-used-type').textContent = mostUsed || 'Text';
+
+                // Draw charts
+                this.drawTypeChart();
+                this.drawUsageChart();
+            }
+
+            drawTypeChart() {
+                const canvas = document.getElementById('type-chart');
+                const ctx = canvas.getContext('2d');
+                const typeCount = this.analytics.typeCount || {};
+                
+                // Clear canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                const types = Object.keys(typeCount);
+                if (types.length === 0) {
+                    ctx.fillStyle = '#666';
+                    ctx.font = '16px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Henüz veri yok', canvas.width/2, canvas.height/2);
+                    return;
+                }
+
+                const colors = ['#4F46E5', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4'];
+                let currentAngle = 0;
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const radius = Math.min(centerX, centerY) - 20;
+                
+                const total = Object.values(typeCount).reduce((sum, count) => sum + count, 0);
+                
+                types.forEach((type, index) => {
+                    const sliceAngle = (typeCount[type] / total) * 2 * Math.PI;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY);
+                    ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
+                    ctx.closePath();
+                    ctx.fillStyle = colors[index % colors.length];
+                    ctx.fill();
+                    
+                    currentAngle += sliceAngle;
+                });
+            }
+
+            drawUsageChart() {
+                const canvas = document.getElementById('usage-chart');
+                const ctx = canvas.getContext('2d');
+                const dailyUsage = this.analytics.dailyUsage || {};
+                
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                const dates = Object.keys(dailyUsage).sort().slice(-7); // Last 7 days
+                if (dates.length === 0) {
+                    ctx.fillStyle = '#666';
+                    ctx.font = '16px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Henüz veri yok', canvas.width/2, canvas.height/2);
+                    return;
+                }
+                
+                const values = dates.map(date => dailyUsage[date]);
+                const maxValue = Math.max(...values);
+                const barWidth = canvas.width / dates.length - 10;
+                
+                dates.forEach((date, index) => {
+                    const barHeight = (values[index] / maxValue) * (canvas.height - 40);
+                    const x = index * (barWidth + 10) + 5;
+                    const y = canvas.height - barHeight - 20;
+                    
+                    ctx.fillStyle = '#4F46E5';
+                    ctx.fillRect(x, y, barWidth, barHeight);
+                    
+                    // Draw value on top
+                    ctx.fillStyle = '#333';
+                    ctx.font = '12px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(values[index].toString(), x + barWidth/2, y - 5);
+                });
+            }
+
+            // Export Functions
+            exportAs(format) {
+                if (!this.currentQR) {
+                    this.showNotification('Önce bir QR kodu oluşturun', 'warning');
+                    return;
+                }
+
+                switch (format) {
+                    case 'png':
+                        this.downloadQR();
+                        break;
+                    case 'svg':
+                        this.exportSVG();
+                        break;
+                    case 'pdf':
+                        this.exportPDF();
+                        break;
+                    case 'webp':
+                        this.exportWebP();
+                        break;
+                }
+            }
+
+            exportSVG() {
+                // Basic SVG export - in real implementation, you'd need to recreate QR as SVG
+                const canvas = this.currentQR.canvas;
+                const dataURL = canvas.toDataURL();
+                
+                const svg = `
+                    <svg width="${canvas.width}" height="${canvas.height}" xmlns="http://www.w3.org/2000/svg">
+                        <image href="${dataURL}" width="${canvas.width}" height="${canvas.height}"/>
+                    </svg>
+                `;
+                
+                const blob = new Blob([svg], { type: 'image/svg+xml' });
+                const link = document.createElement('a');
+                link.download = `qr-${this.currentType}-${Date.now()}.svg`;
+                link.href = URL.createObjectURL(blob);
+                link.click();
+                
+                this.showNotification('SVG export tamamlandı!', 'success');
+            }
+
+            exportPDF() {
+                // For a full implementation, you'd need jsPDF library
+                this.showNotification('PDF export için jsPDF kütüphanesi gerekli', 'info');
+            }
+
+            exportWebP() {
+                if (this.currentQR.canvas.toBlob) {
+                    this.currentQR.canvas.toBlob((blob) => {
+                        const link = document.createElement('a');
+                        link.download = `qr-${this.currentType}-${Date.now()}.webp`;
+                        link.href = URL.createObjectURL(blob);
+                        link.click();
+                        this.showNotification('WebP export tamamlandı!', 'success');
+                    }, 'image/webp', 0.8);
+                } else {
+                    this.showNotification('WebP desteklenmiyor', 'error');
+                }
+            }
+
+            // Social Sharing Functions
+            shareToSocial(platform) {
+                if (!this.currentQR) {
+                    this.showNotification('Önce bir QR kodu oluşturun', 'warning');
+                    return;
+                }
+
+                const siteUrl = window.location.href;
+                const text = `QR Kod Generator Pro ile oluşturdum: ${this.currentQR.data}`;
+                
+                const urls = {
+                    twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(siteUrl)}`,
+                    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}`,
+                    whatsapp: `https://wa.me/?text=${encodeURIComponent(text + ' ' + siteUrl)}`,
+                    telegram: `https://t.me/share/url?url=${encodeURIComponent(siteUrl)}&text=${encodeURIComponent(text)}`
+                };
+
+                if (urls[platform]) {
+                    window.open(urls[platform], '_blank', 'width=600,height=400');
+                    this.showNotification(`${platform} ile paylaştı!`, 'success');
                 }
             }
         }
