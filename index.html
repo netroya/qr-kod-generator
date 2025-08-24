@@ -1869,6 +1869,10 @@ Merhaba dünya"></textarea>
                         <div class="stat-label">Toplam İndirme</div>
                     </div>
                     <div class="stat-card">
+                        <div class="stat-number" id="total-scans">0</div>
+                        <div class="stat-label">Toplam Tarama</div>
+                    </div>
+                    <div class="stat-card">
                         <div class="stat-number" id="success-rate">100%</div>
                         <div class="stat-label">Başarı Oranı</div>
                     </div>
@@ -2007,6 +2011,7 @@ Merhaba dünya"></textarea>
                 this.updateSizeDisplay();
                 this.updateAnalytics();
                 this.initializeAnalytics();
+                this.updateScanHistoryDisplay();
                 this.registerServiceWorker();
             }
 
@@ -2441,18 +2446,42 @@ Merhaba dünya"></textarea>
             // Scanner functions
             async startScanner() {
                 try {
-                    this.scannerStream = await navigator.mediaDevices.getUserMedia({
-                        video: { facingMode: 'environment' }
-                    });
+                    // Get available cameras
+                    if (this.availableCameras.length === 0) {
+                        const devices = await navigator.mediaDevices.enumerateDevices();
+                        this.availableCameras = devices.filter(device => device.kind === 'videoinput');
+                    }
+                    
+                    // Set up camera constraints
+                    let constraints = { video: { facingMode: 'environment' } };
+                    if (this.availableCameras.length > 0 && this.availableCameras[this.currentCameraIndex]) {
+                        constraints.video.deviceId = this.availableCameras[this.currentCameraIndex].deviceId;
+                    }
+                    
+                    this.scannerStream = await navigator.mediaDevices.getUserMedia(constraints);
                     
                     const video = document.getElementById('video');
                     video.srcObject = this.scannerStream;
                     video.style.display = 'block';
+                    video.classList.add('active');
                     video.play();
                     
                     document.getElementById('scanner-placeholder').style.display = 'none';
+                    document.getElementById('scanner-overlay').style.display = 'block';
                     document.getElementById('start-scanner').classList.add('hidden');
                     document.getElementById('stop-scanner').classList.remove('hidden');
+                    
+                    // Show additional controls if available
+                    if (this.availableCameras.length > 1) {
+                        document.getElementById('switch-camera').classList.remove('hidden');
+                    }
+                    
+                    // Check for flashlight support
+                    const track = this.scannerStream.getVideoTracks()[0];
+                    const capabilities = track.getCapabilities();
+                    if (capabilities.torch) {
+                        document.getElementById('flashlight').classList.remove('hidden');
+                    }
                     
                     this.scannerActive = true;
                     this.scanForQR(video);
@@ -2470,12 +2499,17 @@ Merhaba dünya"></textarea>
                 
                 const video = document.getElementById('video');
                 video.style.display = 'none';
+                video.classList.remove('active');
                 
                 document.getElementById('scanner-placeholder').style.display = 'block';
+                document.getElementById('scanner-overlay').style.display = 'none';
                 document.getElementById('start-scanner').classList.remove('hidden');
                 document.getElementById('stop-scanner').classList.add('hidden');
+                document.getElementById('switch-camera').classList.add('hidden');
+                document.getElementById('flashlight').classList.add('hidden');
                 
                 this.scannerActive = false;
+                this.flashlightOn = false;
             }
 
             scanForQR(video) {
@@ -2494,8 +2528,10 @@ Merhaba dünya"></textarea>
                     const code = jsQR(imageData.data, imageData.width, imageData.height);
                     
                     if (code) {
-                        this.displayScanResult(code.data);
-                        this.stopScanner();
+                        this.handleScanResult(code.data);
+                        if (!document.getElementById('scanner-continuous').checked) {
+                            this.stopScanner();
+                        }
                         return;
                     }
                 }
@@ -2512,13 +2548,39 @@ Merhaba dünya"></textarea>
 
             copyScanResult() {
                 const data = document.getElementById('scanned-data').textContent;
-                navigator.clipboard.writeText(data).then(() => {
+                if (!data) {
+                    this.showNotification('Kopyalanacak veri yok', 'warning');
+                    return;
+                }
+                
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(data).then(() => {
+                        this.showNotification('Tarama sonucu kopyalandı!', 'success');
+                    }).catch(() => {
+                        this.fallbackCopyText(data);
+                    });
+                } else {
+                    this.fallbackCopyText(data);
+                }
+            }
+
+            fallbackCopyText(text) {
+                const tempInput = document.createElement('input');
+                tempInput.value = text;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                try {
+                    document.execCommand('copy');
                     this.showNotification('Tarama sonucu kopyalandı!', 'success');
-                });
+                } catch (error) {
+                    this.showNotification('Kopyalama başarısız', 'error');
+                }
+                document.body.removeChild(tempInput);
             }
 
             // Batch functions
-            generateBatch() {
+            oldGenerateBatch() {
+                // Bu fonksiyon artık kullanılmıyor - yeni async generateBatch() kullanılıyor
                 const batchData = document.getElementById('batch-data').value.trim();
                 if (!batchData) {
                     this.showNotification('Lütfen toplu veri girin', 'error');
@@ -2832,6 +2894,8 @@ Merhaba dünya"></textarea>
                     }
                 } else if (action === 'download') {
                     this.analytics.totalDownloads++;
+                } else if (action === 'scan') {
+                    this.analytics.totalScans = (this.analytics.totalScans || 0) + 1;
                 }
 
                 // Daily usage tracking
@@ -2847,6 +2911,7 @@ Merhaba dünya"></textarea>
                 // Update stats
                 document.getElementById('total-generated').textContent = this.analytics.totalGenerated || 0;
                 document.getElementById('total-downloads').textContent = this.analytics.totalDownloads || 0;
+                document.getElementById('total-scans').textContent = this.analytics.totalScans || 0;
                 document.getElementById('success-rate').textContent = this.analytics.successRate + '%';
 
                 // Find most used type
@@ -3586,7 +3651,7 @@ Merhaba dünya"></textarea>
 
         // Initialize app when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-            window.qrApp = new QRGeneratorPro();
+            window.app = new QRGeneratorPro();
         });
         
         // Initialize AdSense
