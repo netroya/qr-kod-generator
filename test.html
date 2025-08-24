@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Test</title>
+</head>
+<body>
+    <h1>QR Kod Testi</h1>
+    
+    <input type="text" id="textInput" placeholder="Metin gir" value="Test mesaj">
+    <button onclick="generateQR()">QR Oluştur</button>
+    
+    <br><br>
+    <canvas id="qrCanvas"></canvas>
+    
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script>
+        function generateQR() {
+            const text = document.getElementById('textInput').value;
+            const canvas = document.getElementById('qrCanvas');
+            
+            console.log('QR üretiliyor:', text);
+            console.log('QRCode kütüphanesi:', typeof QRCode);
+            
+            if (typeof QRCode === 'undefined') {
+                alert('QRCode kütüphanesi yüklenmedi!');
+                return;
+            }
+            
+            QRCode.toCanvas(canvas, text, function (error) {
+                if (error) {
+                    console.error('QR hatası:', error);
+                    alert('QR kod oluşturulurken hata: ' + error.message);
+                } else {
+                    console.log('QR kod başarıyla oluşturuldu!');
+                }
+            });
+        }
+        
+        // Sayfa yüklendiğinde test
+        window.addEventListener('load', function() {
+            console.log('Sayfa yüklendi');
+            console.log('QRCode kütüphanesi:', typeof QRCode);
+            
+            if (typeof QRCode !== 'undefined') {
+                console.log('✅ QRCode kütüphanesi yüklendi');
+                generateQR(); // Otomatik test
+            } else {
+                console.log('❌ QRCode kütüphanesi yüklenmedi!');
+            }
+        });
+    </script>
+</body>
+</html>
