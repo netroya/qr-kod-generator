@@ -1,7 +1,7 @@
 class QRGenerator {
     constructor() {
         this.currentType = 'text';
-        this.qrCanvas = document.getElementById('qr-canvas');
+        this.qrCanvas = document.querySelector('.qr-display');
         this.qrPlaceholder = document.querySelector('.qr-placeholder');
         this.qrActions = document.querySelector('.qr-actions');
         this.init();
@@ -102,23 +102,21 @@ class QRGenerator {
         this.showLoading();
         
         try {
-            QRCode.toCanvas(this.qrCanvas, data, {
+            // Clear previous QR
+            this.qrCanvas.innerHTML = '';
+            
+            // Create new QR code instance
+            const qr = new QRCode(this.qrCanvas, {
+                text: data,
                 width: 300,
-                margin: 2,
-                color: {
-                    dark: '#1F2937',
-                    light: '#FFFFFF'
-                },
-                errorCorrectionLevel: 'M'
-            }, (error) => {
-                if (error) {
-                    console.error(error);
-                    this.showError('QR kod oluşturulurken bir hata oluştu');
-                } else {
-                    this.showQRResult();
-                    this.trackEvent('qr_generated', this.currentType);
-                }
+                height: 300,
+                colorDark: '#1F2937',
+                colorLight: '#FFFFFF',
+                correctLevel: QRCode.CorrectLevel.M
             });
+            
+            this.showQRResult();
+            this.trackEvent('qr_generated', this.currentType);
         } catch (error) {
             console.error(error);
             this.showError('QR kod oluşturulurken bir hata oluştu');
@@ -246,14 +244,16 @@ class QRGenerator {
 
     downloadQR() {
         try {
-            const canvas = this.qrCanvas;
-            const link = document.createElement('a');
-            link.download = `qr-code-${this.currentType}-${Date.now()}.png`;
-            link.href = canvas.toDataURL();
-            link.click();
-            
-            this.showNotification('QR kod başarıyla indirildi!', 'success');
-            this.trackEvent('qr_downloaded', this.currentType);
+            const canvas = this.qrCanvas.querySelector('canvas');
+            if (canvas) {
+                const link = document.createElement('a');
+                link.download = `qr-code-${this.currentType}-${Date.now()}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+                
+                this.showNotification('QR kod başarıyla indirildi!', 'success');
+                this.trackEvent('qr_downloaded', this.currentType);
+            }
         } catch (error) {
             console.error(error);
             this.showNotification('İndirme sırasında bir hata oluştu', 'error');
@@ -262,18 +262,20 @@ class QRGenerator {
 
     async copyQR() {
         try {
-            const canvas = this.qrCanvas;
-            canvas.toBlob(async (blob) => {
-                try {
-                    const item = new ClipboardItem({ 'image/png': blob });
-                    await navigator.clipboard.write([item]);
-                    this.showNotification('QR kod panoya kopyalandı!', 'success');
-                    this.trackEvent('qr_copied', this.currentType);
-                } catch (error) {
-                    console.error(error);
-                    this.fallbackCopy();
-                }
-            });
+            const canvas = this.qrCanvas.querySelector('canvas');
+            if (canvas) {
+                canvas.toBlob(async (blob) => {
+                    try {
+                        const item = new ClipboardItem({ 'image/png': blob });
+                        await navigator.clipboard.write([item]);
+                        this.showNotification('QR kod panoya kopyalandı!', 'success');
+                        this.trackEvent('qr_copied', this.currentType);
+                    } catch (error) {
+                        console.error(error);
+                        this.fallbackCopy();
+                    }
+                });
+            }
         } catch (error) {
             console.error(error);
             this.fallbackCopy();
@@ -282,18 +284,20 @@ class QRGenerator {
 
     fallbackCopy() {
         try {
-            const canvas = this.qrCanvas;
-            const dataURL = canvas.toDataURL();
-            
-            // Create a temporary link for fallback
-            const tempInput = document.createElement('input');
-            tempInput.value = dataURL;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            
-            this.showNotification('QR kod bağlantısı panoya kopyalandı!', 'success');
+            const canvas = this.qrCanvas.querySelector('canvas');
+            if (canvas) {
+                const dataURL = canvas.toDataURL();
+                
+                // Create a temporary link for fallback
+                const tempInput = document.createElement('input');
+                tempInput.value = dataURL;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                
+                this.showNotification('QR kod bağlantısı panoya kopyalandı!', 'success');
+            }
         } catch (error) {
             this.showNotification('Kopyalama sırasında bir hata oluştu', 'error');
         }
@@ -439,14 +443,11 @@ class InputFormatters {
     }
 }
 
-// PWA Support
+// PWA Support - Disabled (no sw.js file)
 class PWASupport {
     static init() {
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(() => console.log('Service Worker registered'))
-                .catch(err => console.log('Service Worker registration failed', err));
-        }
+        // Service Worker disabled - no sw.js file available
+        console.log('PWA support disabled - no service worker file');
     }
 }
 
