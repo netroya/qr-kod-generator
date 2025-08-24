@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://qr-kod-uretici.vercel.app/</loc>
-        <lastmod>2024-08-23</lastmod>
+        <loc>https://netroya.github.io/qr-kod-generator/</loc>
+        <lastmod>2025-08-24</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://qr-kod-uretici.vercel.app/gizlilik-politikasi.html</loc>
-        <lastmod>2024-08-23</lastmod>
+        <loc>https://netroya.github.io/qr-kod-generator/gizlilik-politikasi.html</loc>
+        <lastmod>2025-08-24</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://qr-kod-uretici.vercel.app/kullanim-kosullari.html</loc>
-        <lastmod>2024-08-23</lastmod>
+        <loc>https://netroya.github.io/qr-kod-generator/kullanim-kosullari.html</loc>
+        <lastmod>2025-08-24</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
