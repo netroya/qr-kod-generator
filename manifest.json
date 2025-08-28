@@ -1,20 +1,29 @@
 {
   "name": "QR Generator Pro",
   "short_name": "QR Pro",
-  "description": "Gelişmiş QR kod generator - QR oluştur, tara, toplu üret",
+  "description": "Gelişmiş QR kod generator - QR oluştur, tara, toplu üret, offline çalış",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#667eea",
-  "theme_color": "#4F46E5",
-  "orientation": "portrait-primary",
-  "categories": ["productivity", "utilities"],
+  "theme_color": "#4338CA",
+  "orientation": "any",
+  "categories": ["productivity", "utilities", "business"],
   "lang": "tr",
+  "scope": "/",
+  "id": "qr-generator-pro",
+  "dir": "ltr",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
     }
   ],
   "screenshots": [
@@ -22,21 +31,87 @@
       "src": "screenshot-wide.png",
       "sizes": "1024x768",
       "type": "image/png",
-      "form_factor": "wide"
+      "form_factor": "wide",
+      "label": "QR Generator Pro ana ekran"
     },
     {
       "src": "screenshot-narrow.png", 
       "sizes": "375x812",
       "type": "image/png",
-      "form_factor": "narrow"
+      "form_factor": "narrow",
+      "label": "Mobil görünüm"
     }
   ],
+  "shortcuts": [
+    {
+      "name": "QR Oluştur",
+      "short_name": "Oluştur",
+      "description": "Hızla yeni QR kod oluştur",
+      "url": "/?action=generate",
+      "icons": [
+        {
+          "src": "favicon.svg",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "QR Tara",
+      "short_name": "Tara",
+      "description": "QR kod tara",
+      "url": "/?action=scan",
+      "icons": [
+        {
+          "src": "favicon.svg", 
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+qrcode",
+      "url": "/?qr=%s"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/",
+      "accept": {
+        "image/*": [".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg"]
+      }
+    }
+  ],
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
   "features": [
-    "QR kod oluşturma",
-    "QR kod tarama",
-    "Toplu QR üretimi", 
-    "QR geçmişi",
-    "Renk özelleştirme",
-    "Offline çalışma"
-  ]
+    "QR kod oluşturma (11 farklı tip)",
+    "QR kod tarama (kamera + dosya)",
+    "Toplu QR üretimi (CSV/Excel desteği)", 
+    "QR geçmişi ve favoriler",
+    "Gelişmiş renk/desen özelleştirme",
+    "Logo ekleme desteği",
+    "Offline çalışma modu",
+    "PWA desteği",
+    "Dark mode",
+    "Accessibility (WCAG 2.1)",
+    "Çoklu format export (PNG/SVG/PDF)",
+    "Sosyal medya paylaşım",
+    "Analytics ve istatistikler"
+  ],
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "handle_links": "preferred"
 }
